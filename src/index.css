@@ -160,3 +160,126 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* .heart-path {
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
+  animation: drawHeart 3s ease-in-out infinite;
+} */
+
+/* @keyframes drawHeart {
+  0% {
+    stroke-dashoffset: 300;
+    opacity: 0.3;
+  }
+
+  40% {
+    opacity: 1;
+  }
+
+  60% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+
+  100% {
+    stroke-dashoffset: -300;
+    opacity: 0.3;
+  }
+} */
+
+/* .heart-svg {
+  animation: pulse 2s ease-in-out infinite;
+} */
+
+/* @keyframes pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+} */
+
+.heart-path {
+   stroke-dasharray: 120;
+  stroke-dashoffset: 320; 
+  animation: drawLiquid 7s linear infinite;
+}
+
+.outer-heart {
+  animation-delay: 0s;
+}
+
+.inner-heart {
+  animation-delay: 0.4s;
+  opacity: 0.85;
+}
+
+@keyframes drawLiquid {
+  0% {
+    stroke-dashoffset: 320;
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.2;
+  }
+
+  /* 65% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  } */
+
+  65% {
+    stroke-dashoffset: 0;
+    opacity: 0.1;
+  }
+
+  100% {
+    stroke-dashoffset: -320;
+    opacity: 1;
+  }
+}
+
+/* Subtle breathing motion */
+.heart-svg {
+  animation: breathe 2.5s linear infinite;
+}
+
+@keyframes breathe {
+
+  0%,
+  100% {
+    transform: scale(2);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+.heart-path {
+  filter: drop-shadow(1px 0 1px #ff5656);
+}
+
+/* .fade-out {
+  animation: fadeOut 0.8s ease forwards;
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+} */
+
+/* @keyframes fadeOut {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+} */

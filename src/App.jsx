@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import CurvedLoop from './components/CurvedLoop';
 import ImageTrail from './components/ImageTrail';
-import { toast } from "sonner"
+import Loader from './components/Loader';
 
 import vid1 from '/vid1.mp4';
 import i1 from '/i1.png';
@@ -16,10 +16,10 @@ import i6 from '/i6.png';
 export default function ValentineWebsite() {
   const [currentPage, setCurrentPage] = useState('question');
   const [noBtnPosition, setNoBtnPosition] = useState({ x: 0, y: 0 });
-  const [videoUrl, setVideoUrl] = useState('');
-  const [embedUrl, setEmbedUrl] = useState('');
   const [cuteTexts, setCuteTexts] = useState([]);
   const noBtnRef = useRef(null);
+
+  const [loaded, setLoaded] = useState(false);
 
   const cuteMessages = [
     "You're my everything Babe! 💕",
@@ -93,7 +93,41 @@ export default function ValentineWebsite() {
     });
   };
 
+  useEffect(() => {
+    const images = document.images;
+    const videos = document.querySelectorAll("video");
+
+    let totalAssets = images.length + videos.length;
+    let loadedAssets = 0;
+
+    const assetLoaded = () => {
+      loadedAssets++;
+      if (loadedAssets >= totalAssets) {
+        setLoaded(true);
+      }
+    };
+
+    if (totalAssets === 0) {
+      setLoaded(true);
+      return;
+    }
+
+    [...images].forEach(img => {
+      if (img.complete) assetLoaded();
+      else img.onload = img.onerror = assetLoaded;
+    });
+
+    videos.forEach(video => {
+      if (video.readyState >= 3) assetLoaded();
+      else video.onloadeddata = assetLoaded;
+    });
+
+  }, []);
+
+  if (!loaded) return <Loader />;
+
   return (
+
     <div className="min-h-screen bg-linear-to-br from-pink-100 via-pink-200 to-pink-400 flex items-center justify-center p-4 overflow-x-hidden relative">
       {/* Floating Hearts Background */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
