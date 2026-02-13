@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import CurvedLoop from './components/CurvedLoop';
 import ImageTrail from './components/ImageTrail';
 import Loader from './components/Loader';
+import AudioControl from './components/AudioControl';
 
 import vid1 from '/vid1.mp4';
 import i1 from '/i1.png';
@@ -95,48 +96,48 @@ export default function ValentineWebsite() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-    const images = document.images;
-    const videos = document.querySelectorAll("video");
-    const iframes = document.querySelectorAll("iframe");
+      const images = document.images;
+      const videos = document.querySelectorAll("video");
+      const iframes = document.querySelectorAll("iframe");
 
 
-    let totalAssets = images.length + videos.length + iframes.length;
-    let loadedAssets = 0;
+      let totalAssets = images.length + videos.length + iframes.length;
+      let loadedAssets = 0;
 
-    const assetLoaded = () => {
-      loadedAssets++;
-      if (loadedAssets >= totalAssets) {
+      const assetLoaded = () => {
+        loadedAssets++;
+        if (loadedAssets >= totalAssets) {
+          setLoaded(true);
+        }
+      };
+
+      if (totalAssets === 0) {
         setLoaded(true);
+        return;
       }
-    };
 
-    if (totalAssets === 0) {
-      setLoaded(true);
-      return;
-    }
+      [...images].forEach(img => {
+        if (img.complete) assetLoaded();
+        else img.onload = img.onerror = assetLoaded;
+      });
 
-    [...images].forEach(img => {
-      if (img.complete) assetLoaded();
-      else img.onload = img.onerror = assetLoaded;
-    });
+      videos.forEach(video => {
+        if (video.readyState >= 3) assetLoaded();
+        else video.onloadeddata = assetLoaded;
+      });
 
-    videos.forEach(video => {
-      if (video.readyState >= 3) assetLoaded();
-      else video.onloadeddata = assetLoaded;
-    });
+      iframes.forEach(iframe => {
+        if (iframe.contentDocument?.readyState === 'complete') {
+          assetLoaded();
+        } else {
+          iframe.onload = assetLoaded;
+          iframe.onerror = assetLoaded;
+        }
+      });
 
-    iframes.forEach(iframe => {
-      if (iframe.contentDocument?.readyState === 'complete') {
-        assetLoaded();
-      } else {
-        iframe.onload = assetLoaded;
-        iframe.onerror = assetLoaded;
-      }
-    });
+    }, 100);
 
-  }, 100);
-
-  return () => clearTimeout(timer);
+    return () => clearTimeout(timer);
 
   }, [currentPage]);
 
@@ -144,10 +145,12 @@ export default function ValentineWebsite() {
 
   return (
 
+
     <div className="min-h-screen bg-linear-to-br from-pink-100 via-pink-200 to-pink-400 flex items-center justify-center p-4 overflow-x-hidden relative">
+      <AudioControl />
       {/* Floating Hearts Background */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        {[...Array(15)].map((_, i) => (
+        {[...Array(20)].map((_, i) => (
           <div
             key={i}
             className="absolute text-xl opacity-0 animate-float"
@@ -213,36 +216,71 @@ export default function ValentineWebsite() {
 
       {/* Carousel Page */}
       {currentPage === 'carousel' && (!loaded ? <Loader /> : (
-        <div className="relative z-10 text-center p-10 bg-white/50 rounded-[30px] shadow-2xl max-w-3xl w-full backdrop-blur-sm">
-          <h2 className="font-pacifico text-5xl text-pink-600 mb-8 relative z-30">
-            Our Beautiful Moments 💖
-          </h2>
 
-          <div className="relative h-100 my-10 z-20" style={{ perspective: '1000px' }}>
-            <div className="absolute inset-0 animate-rotate3d" style={{ transformStyle: 'preserve-3d' }}>
-              {[0, 1, 2, 3, 4, 5, 8].map((i) => (
-                <div
-                  key={i}
-                  className="absolute top-1/2 left-1/2 w-52 h-80 -ml-26 -mt-32"
-                  style={{
-                    transformStyle: 'preserve-3d',
-                    transform: `rotateY(${i * 60}deg) translateZ(300px)`
-                  }}
-                >
-                  <div className="w-full h-full rounded-2xl flex items-center justify-center text-white text-2xl shadow-2xl shadow-pink-500/30 border-4 border-white">
-                    <img src={`/pic${i + 1}.jpg`} alt={`Memory ${i + 1}`} className="w-full h-full object-cover rounded-2xl" />
-                  </div>
-                </div>
-              ))}
-            </div>
+        <div className='w-screen h-screen flex flex-col items-center justify-center relative overflow-hidden'>
+
+          <div style={{ width: '100%', height: '100%', position: 'relative', zIndex: 1, overflow: 'hidden' }}>
+
+            <ImageTrail
+
+              items={[
+                '/pic1.jpg',
+                '/pic2.jpg',
+                '/pic3.jpg',
+                '/pic4.jpg',
+                '/pic5.jpg',
+                '/pic6.jpg',
+                '/pic7.jpg',
+                '/pic8.jpg',
+                '/pic9.jpg',
+                '/pic10.jpg',
+                '/pic11.jpg',
+                '/pic12.jpg',
+                '/pic13.jpg',
+                '/pic14.jpg',
+                '/pic15.jpg',
+                '/pic16.jpg',
+
+              ]}
+              variant="2"
+            />
           </div>
 
-          <button
-            onClick={() => setCurrentPage('presents')}
-            className="mt-8 font-dancing text-2xl px-10 py-4 bg-linear-to-r from-pink-600 to-pink-400 text-white rounded-full shadow-lg hover:scale-110 transition-all duration-300 font-bold animate-pulse relative z-30 cursor-pointer"
-          >
-            See Your Presents 🎁😘
-          </button>
+
+          <div className="absolute z-10 text-center p-10 bg-white/50 rounded-[30px] shadow-2xl max-w-3xl  backdrop-blur-sm">
+
+            <h2 className="font-pacifico text-5xl text-pink-600 mb-8 relative z-30">
+              Our Beautiful Moments 💖
+            </h2>
+
+            <div className="relative h-100 my-10 z-20" style={{ perspective: '1000px' }}>
+              <div className="absolute inset-0 animate-rotate3d" style={{ transformStyle: 'preserve-3d' }}>
+                {[0, 1, 2, 3, 4, 5, 8].map((i) => (
+                  <div
+                    key={i}
+                    className="absolute top-1/2 left-1/2 w-52 h-80 -ml-26 -mt-32"
+                    style={{
+                      transformStyle: 'preserve-3d',
+                      transform: `rotateY(${i * 60}deg) translateZ(300px)`
+                    }}
+                  >
+                    <div className="w-full h-full rounded-2xl flex items-center justify-center text-white text-2xl shadow-2xl shadow-pink-500/30 border-4 border-white hover:scale-125 transition-transform duration-300 cursor-pointer overflow-hidden">
+                      <img src={`/pic${i + 1}.jpg`} alt={`Memory ${i + 1}`} className="w-full h-full object-cover rounded-2xl" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+            </div>
+
+            <button
+              onClick={() => setCurrentPage('presents')}
+              className="mt-8 font-dancing text-2xl px-10 py-4 bg-linear-to-r from-pink-600 to-pink-400 text-white rounded-full shadow-lg hover:scale-110 transition-all duration-300 font-bold animate-pulse relative z-30 cursor-pointer"
+            >
+              See Your Presents 🎁😘
+            </button>
+          </div>
+
         </div>
       ))}
 
