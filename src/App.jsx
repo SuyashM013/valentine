@@ -94,10 +94,13 @@ export default function ValentineWebsite() {
   };
 
   useEffect(() => {
+    const timer = setTimeout(() => {
     const images = document.images;
     const videos = document.querySelectorAll("video");
+    const iframes = document.querySelectorAll("iframe");
 
-    let totalAssets = images.length + videos.length;
+
+    let totalAssets = images.length + videos.length + iframes.length;
     let loadedAssets = 0;
 
     const assetLoaded = () => {
@@ -122,7 +125,20 @@ export default function ValentineWebsite() {
       else video.onloadeddata = assetLoaded;
     });
 
-  }, []);
+    iframes.forEach(iframe => {
+      if (iframe.contentDocument?.readyState === 'complete') {
+        assetLoaded();
+      } else {
+        iframe.onload = assetLoaded;
+        iframe.onerror = assetLoaded;
+      }
+    });
+
+  }, 100);
+
+  return () => clearTimeout(timer);
+
+  }, [currentPage]);
 
   if (!loaded) return <Loader />;
 
