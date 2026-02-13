@@ -18,7 +18,6 @@ import i6 from '/i6.png';
 
 
 
-
 export default function ValentineWebsite() {
   const [currentPage, setCurrentPage] = useState('question');
   const [noBtnPosition, setNoBtnPosition] = useState({ x: 0, y: 0 });
