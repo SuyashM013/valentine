@@ -177,6 +177,7 @@ export default function ValentineWebsite() {
 
               <button
                 ref={noBtnRef}
+                onClick={handleNoHover}
                 onMouseEnter={handleNoHover}
                 className="font-dancing text-2xl px-12 py-4 bg-linear-to-r from-pink-200 to-pink-100 text-pink-600 rounded-full shadow-lg font-bold transition-all duration-300"
                 style={{
@@ -195,7 +196,7 @@ export default function ValentineWebsite() {
       )}
 
       {/* Carousel Page */}
-      {currentPage === 'carousel' && (
+      {currentPage === 'carousel' && (!loaded ? <Loader /> : (
         <div className="relative z-10 text-center p-10 bg-white/50 rounded-[30px] shadow-2xl max-w-3xl w-full backdrop-blur-sm">
           <h2 className="font-pacifico text-5xl text-pink-600 mb-8 relative z-30">
             Our Beautiful Moments 💖
@@ -227,7 +228,7 @@ export default function ValentineWebsite() {
             See Your Presents 🎁😘
           </button>
         </div>
-      )}
+      ))}
 
       {/* Cute Text Animations - Full Screen */}
       {currentPage === 'carousel' && (
