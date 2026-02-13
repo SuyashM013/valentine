@@ -7,8 +7,8 @@ import AudioControl from './components/AudioControl';
 import { ToastContainer, toast } from 'react-toastify';
 
 
-
 import vid1 from '/vid1.mp4';
+
 import i1 from '/i1.png';
 import i2 from '/i2.png';
 import i3 from '/i3.png';
@@ -199,9 +199,8 @@ export default function ValentineWebsite() {
             <div className="flex gap-8 justify-center items-center flex-wrap relative min-h-20">
               <button
                 onClick={() => {
-                  toast("Try to open on Laptop or Desktop for more thingss..! 😘");
-                  // console.log("User accepted! Show them the carousel page.");
                   setCurrentPage('carousel')
+                  toast("Try to open on Laptop or Desktop for more thingss..! 😘");
                 }}
 
                 className="font-dancing text-2xl px-12 py-4 bg-linear-to-r from-pink-300 to-pink-700 text-white rounded-full shadow-lg hover:scale-110 transition-all duration-300 font-bold hover:shadow-pink-400/70 cursor-pointer"
@@ -405,7 +404,7 @@ export default function ValentineWebsite() {
             </h2>
             <div className="rounded-3xl overflow-hidden shadow-xl mb-6">
 
-              <div className="w-full bg-linear-to-br from-pink-100 to-pink-200 flex items-center justify-center text-white p-10">
+              <div className="w-full bg-linear-to-br from-pink-100 to-pink-200 flex items-center justify-center text-white md:p-10 lg:p-12 ">
                 <div>
 
                   <video className="w-full bg-pink-300 rounded-lg" autoPlay loop controls>
