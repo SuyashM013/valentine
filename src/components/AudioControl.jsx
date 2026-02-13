@@ -4,6 +4,8 @@ const tracks = [
     "/audio/aud1.mp3",
     "/audio/aud2.mp3",
     "/audio/aud3.mp3",
+    "/audio/aud4.mp3",
+    "/audio/aud5.mp3",
 ];
 
 export default function AudioControl() {
@@ -27,10 +29,10 @@ export default function AudioControl() {
         audioRef.current.volume = 0;
 
         fadeInterval.current = setInterval(() => {
-            if (audioRef.current.volume < 0.35) {
-                audioRef.current.volume += 0.035;
+            if (audioRef.current.volume < 0.25) {
+                audioRef.current.volume += 0.025;
             } else {
-                audioRef.current.volume = 0.35;
+                audioRef.current.volume = 0.25;
                 clearInterval(fadeInterval.current);
             }
         }, 100);
