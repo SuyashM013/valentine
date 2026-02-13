@@ -204,7 +204,7 @@ export default function ValentineWebsite() {
 
           <div className="relative h-100 my-10 z-20" style={{ perspective: '1000px' }}>
             <div className="absolute inset-0 animate-rotate3d" style={{ transformStyle: 'preserve-3d' }}>
-              {[0, 1, 2, 3, 4, 5,8].map((i) => (
+              {[0, 1, 2, 3, 4, 5, 8].map((i) => (
                 <div
                   key={i}
                   className="absolute top-1/2 left-1/2 w-52 h-80 -ml-26 -mt-32"
@@ -318,7 +318,7 @@ export default function ValentineWebsite() {
 
 
       {/* Video Page */}
-      {currentPage === 'video' && (
+      {currentPage === 'video' && (!loaded ? <Loader /> : (
         <div className="relative z-10 text-center p-10 bg-white/70 rounded-[30px] shadow-2xl max-w-2xl w-full backdrop-blur-sm">
           <h2 className="font-pacifico text-5xl text-pink-600 mb-8">
             Special Video for my Love 😘
@@ -345,6 +345,7 @@ export default function ValentineWebsite() {
             Back to Presents
           </button>
         </div>
+      )
       )}
 
       {/* Letter Page */}
